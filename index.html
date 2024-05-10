@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Name Entity Recognition App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        html, body {
+            height: 100%; /* Ensures the full height of the viewport */
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('https://i0.wp.com/eos.org/wp-content/uploads/2020/07/data-streams-eos-august.png?fit=820%2C615&ssl=1') no-repeat center center fixed; 
+            background-size: cover; /* Cover the entire viewport without repeating */
+        }
+        .container {
+            margin-top: 40px;
+            min-height: calc(100% - 80px); /* Adjust height calculation to include footer */
+            color: #fff; /* Change text color for better visibility on dark backgrounds */
+            padding-bottom: 20px; /* Extra space at the bottom of the container */
+        }
+        h1 {
+            font-weight: bold; /* Make the font bold */
+            color: white; /* Set color to white */
+            margin-bottom: 30px; /* Added space below the header */
+        }
+        .bg-dark-custom {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white for readability */
+            padding: 20px;
+            border-radius: 15px;
+            color: #343a40; /* Dark text for readability */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Shadow for elevation */
+            margin-bottom: 20px; /* Added space below each box */
+        }
+        .btn-primary {
+            background-color: #009688;
+            border: none;
+            font-size: 1.1em; /* Larger font size for button */
+        }
+        .btn-primary:hover {
+            background-color: #00796b;
+        }
+        .footer {
+            position: relative; /* Changed to relative for flexibility */
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1em; /* Increased font size for footer text */
+            color: white; /* Changed color to white */
+            font-weight: bold; /* Make the font bold */
+        }
+        .results {
+            text-align: left; /* Align results to the left */
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* More opacity for better text visibility */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adding subtle shadow for better emphasis */
+            color: #212529; /* Dark text for readability */
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Name Entity Recognition App</h1>
+        <div class="bg-dark-custom">
+            <form action="/entity" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Upload File</label>
+                    <input type="file" name="file" class="form-control" id="file">
+                    <div id="fileHelp" class="form-text">Upload a text file for entity recognition.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Get Entity</button>
+            </form>
+        </div>
+        <div class="results">
+            {% if html and text %}
+            <h3>Results:</h3>
+            <div><strong>Original Text:</strong></div>
+            <p>{{text|safe}}</p>
+            <div><strong>Entity Text:</strong></div>
+            <p>{{html|safe}}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <p>© 2024 Name Entity Recognition App</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        // Enhanced interactive feedback for file upload
+        document.getElementById('file').onchange = function() {
+            var file = this.files[0];
+            if (file) {
+                var filename = file.name;
+                document.getElementById('fileHelp').textContent = 'File "' + filename + '" ready to upload.';
+                document.getElementById('fileHelp').style.color = '#28a745';
+            }
+        };
+    </script>
+</body>
+</html>
